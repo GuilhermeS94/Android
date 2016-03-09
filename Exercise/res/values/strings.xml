@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Exercise</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="lblTitulo">Titulo</string>
+    <string name="lblConteudo">Conteudo</string>
 
 </resources>
