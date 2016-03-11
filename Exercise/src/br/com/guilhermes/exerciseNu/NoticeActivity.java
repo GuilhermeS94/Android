@@ -20,16 +20,10 @@ public class NoticeActivity extends Activity {
 		
 		//Solicitar o get
 		try {
-			String resp = new TratarRequests().execute("https://nu-mobile-hiring.herokuapp.com/notice").get();
+			String resp = new TratarRequests().execute(StaticVars.NOTICE).get();
 			JSONObject json = new TratarJson().ConverterJsonParaJSONObject(resp);
-			Iterator<String> temp = json.keys();
-	        while (temp.hasNext()) {
-	            String key = temp.next();
-	            //criar switch case para pegar titulo e conteudo
-	            //deste json
-	            Object value = json.get(key);
-	        }
-			//Toast.makeText(getApplicationContext(), resp, Toast.LENGTH_LONG).show();
+			TextView nvTitulo = (TextView) findViewById(R.id.lblTitulo);			        
+			nvTitulo.setText(json.get(StaticVars.TITLE).toString());			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
