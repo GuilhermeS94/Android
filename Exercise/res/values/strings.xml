@@ -5,6 +5,8 @@
     <string name="lblTitulo">Titulo</string>
     <string name="lblConteudo">Conteudo</string>
     <string name="txBtnContinuar">Continuar</string>
-    <string name="txBtnFechar">Fechar</string>
+    <string name="txBtnFechar">Fechar</string>    
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
