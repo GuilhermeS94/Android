@@ -1,7 +1,6 @@
 package br.com.guilhermes.exerciseNu;
 
 import java.io.IOException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -15,7 +14,7 @@ import android.os.AsyncTask;
 public class TratarRequests extends AsyncTask<String, String, String> {
 	
 	@Override
-    protected String doInBackground(String... uri) {
+    protected String doInBackground(String... uri){
         HttpClient httpclient = new DefaultHttpClient();
         HttpResponse response;
         String returnJson = "";
@@ -28,10 +27,10 @@ public class TratarRequests extends AsyncTask<String, String, String> {
                 response.getEntity().getContent().close();
                 throw new IOException(statusLine.getReasonPhrase());
             }
-        } catch (ClientProtocolException e) {
-
-        } catch (IOException e) {
-
+        } catch (ClientProtocolException cpe) {
+        	cpe.printStackTrace();
+        } catch (IOException ioe) {
+        	ioe.printStackTrace();
         } 
         return returnJson;
     }

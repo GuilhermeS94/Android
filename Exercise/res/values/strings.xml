@@ -4,5 +4,7 @@
     <string name="app_name">Exercise</string>
     <string name="lblTitulo">Titulo</string>
     <string name="lblConteudo">Conteudo</string>
+    <string name="txBtnContinuar">Continuar</string>
+    <string name="txBtnFechar">Fechar</string>
 
 </resources>
