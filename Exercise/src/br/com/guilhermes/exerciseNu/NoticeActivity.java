@@ -1,12 +1,9 @@
 package br.com.guilhermes.exerciseNu;
 
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +24,7 @@ public class NoticeActivity extends Activity {
 		//Solicitar o get
 		try {
 			String resp = new TratarRequests().execute(StaticVars.NOTICE).get();
-			json = new TratarJson().ConverterJsonParaJSONObject(resp);
+			json = new JSONObject(resp);
 	        
 			TextView nvTitulo = (TextView) findViewById(R.id.lblTitulo);			
 			TextView nvConteudo = (TextView) findViewById(R.id.lblConteudo);
