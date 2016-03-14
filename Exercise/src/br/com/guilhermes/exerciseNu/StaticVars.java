@@ -36,5 +36,9 @@ public class StaticVars {
 	//Valor da chave - String
 	public static final String UNBLOCK_CARD = "unblock_card";
 	//Valor da chave - String
-	public static final String SELF = "self";
+	public static final String SELF = "self";	
+	//Valor da chave - String
+	public static final String MERCHANT_RECONIZED = "merchant_recognized";
+	//Valor da chave - String
+	public static final String CARD_IN_POSSESSION = "card_in_possession";
 }

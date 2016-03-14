@@ -1,6 +1,6 @@
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/GridLayNotice"
+    android:id="@+id/grid_lay_notice"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/background"
@@ -15,15 +15,15 @@
         android:layout_row="0" />
 
     <TextView
-        android:id="@+id/lblTitulo"
+        android:id="@+id/lbl_titulo"
         android:layout_height="50dp"
-        android:typeface="sans"
         android:layout_column="1"
         android:layout_gravity="center"
         android:layout_row="0"
-        android:text="@string/lblTitulo"
+        android:text="@string/lbl_titulo"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/purple" />
+        android:textColor="@color/purple"
+        android:typeface="sans" />
 
     <Space
         android:layout_column="2"
@@ -34,15 +34,15 @@
         android:layout_row="1" />
 
     <TextView
-        android:id="@+id/lblConteudo"
+        android:id="@+id/lbl_conteudo"
         android:layout_height="wrap_content"
-        android:typeface="sans"
         android:layout_column="1"
         android:layout_gravity="center"
         android:layout_row="1"
-        android:text="@string/lblConteudo"
+        android:text="@string/lbl_conteudo"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:typeface="sans" />
 
     <Space
         android:layout_column="2"
@@ -56,22 +56,22 @@
         android:layout_height="wrap_content">
                 
         <Button
-	        android:id="@+id/btnContinuar"
+	        android:id="@+id/btn_continuar"
 	        android:background="@drawable/buttonstyle"
 	        android:textColor="@color/purple"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
 	        android:layout_gravity="center_horizontal|bottom"
-	        android:text="@string/txBtnContinuar" />
+	        android:text="@string/tx_btn_continuar" />
 
     	<Button
-	        android:id="@+id/btnFechar"
+	        android:id="@+id/btn_fechar"
 	        android:background="@drawable/buttonstyle"
-	        android:textColor="@color/closeGray"
+	        android:textColor="@color/close_gray"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
 	        android:layout_gravity="center_horizontal|bottom"
-	        android:text="@string/txBtnFechar" />
+	        android:text="@string/tx_btn_fechar" />
     	
     </LinearLayout>
 

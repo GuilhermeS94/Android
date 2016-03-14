@@ -26,8 +26,8 @@ public class NoticeActivity extends Activity {
 			String resp = new TratarRequests().execute(StaticVars.NOTICE).get();
 			json = new JSONObject(resp);
 	        
-			TextView nvTitulo = (TextView) findViewById(R.id.lblTitulo);			
-			TextView nvConteudo = (TextView) findViewById(R.id.lblConteudo);
+			TextView nvTitulo = (TextView) findViewById(R.id.lbl_titulo);			
+			TextView nvConteudo = (TextView) findViewById(R.id.lbl_conteudo);
 			nvTitulo.setText(json.get(StaticVars.TITLE).toString());
 			nvConteudo.setText(Html.fromHtml(json.get(StaticVars.DESCRIPTION).toString()));
 		} catch (InterruptedException e) {
@@ -38,7 +38,7 @@ public class NoticeActivity extends Activity {
 			e.printStackTrace();
 		}
 		
-		Button btnFechar = (Button) findViewById(R.id.btnFechar);
+		Button btnFechar = (Button) findViewById(R.id.btn_fechar);
         btnFechar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
@@ -46,7 +46,7 @@ public class NoticeActivity extends Activity {
             }
         });
         
-        Button btnCont = (Button) findViewById(R.id.btnContinuar);
+        Button btnCont = (Button) findViewById(R.id.btn_continuar);
         btnCont.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Intent chargeBack = new Intent(NoticeActivity.this, ChargebackActivity.class);

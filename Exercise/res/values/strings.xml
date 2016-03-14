@@ -2,12 +2,16 @@
 <resources>
 
     <string name="app_name">Exercise</string>
-    <string name="lblTitulo">Titulo</string>
-    <string name="lblChgBkTitulo">Titulo</string>
-    <string name="lblConteudo">Conteudo</string>
-    <string name="txBtnContinuar">Continuar</string>
-    <string name="txBtnFechar">Fechar</string>    
+    <string name="lbl_titulo">Titulo</string>
+    <string name="str_chg_bk_titulo">Titulo</string>
+    <string name="lbl_conteudo">Conteudo</string>
+    <string name="tx_btn_continuar">Continuar</string>
+    <string name="tx_btn_fechar">Fechar</string>    
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="str_merchant">Cartão</string>
+    <string name="str_estabelecimento">Estabelecimento</string>
+    <string name="str_img">Cadeado</string>
+    <string name="str_desc_img">Descrição</string>
 
 </resources>

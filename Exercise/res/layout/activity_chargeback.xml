@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearChgBack"
+    android:id="@+id/linear_chg_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -8,25 +8,50 @@
     tools:context="br.com.guilhermes.exerciseNu.ChargebackActivity" >
 
     <TextView
-        android:id="@+id/lblChgBkTitulo"
-        android:layout_height="wrap_content"
+        android:id="@+id/lbl_chg_bk_titulo"
         android:layout_width="wrap_content"
-        android:typeface="sans"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/lblChgBkTitulo"
+        android:text="@string/str_chg_bk_titulo"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:typeface="sans" />
+
+    <LinearLayout
+	    android:id="@+id/linear_cadeado"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"	    
+	    tools:context="br.com.guilhermes.exerciseNu.ChargebackActivity" >
+
+        <ImageView
+            android:id="@+id/img_cadeado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:contentDescription="@drawable/charge_lock"
+            android:src="@drawable/charge_lock" />
+    
+    <TextView
+        android:id="@+id/lbl_desc_img"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/str_desc_img"        
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+	</LinearLayout>
     
     <Switch
         android:id="@+id/merchant_recognized"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Cartão" />
+        android:text="@string/str_merchant" />
 
     <Switch
         android:id="@+id/card_in_possession"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Estabelecimento" />
+        android:text="@string/str_estabelecimento" />
 
 </LinearLayout>

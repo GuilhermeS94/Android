@@ -5,6 +5,6 @@
  <color name="background">#fdfdfd</color>
  <color name="green">#417505</color>
  <color name="red">#d5171b</color>
- <color name="closeGray">#808191</color>
- <color name="disabledGray">#cccccc</color>
+ <color name="close_gray">#808191</color>
+ <color name="disabled_gray">#cccccc</color>
 </resources>
