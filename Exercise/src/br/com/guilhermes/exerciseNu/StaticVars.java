@@ -43,4 +43,18 @@ public class StaticVars {
 	public static final String MERCHANT_RECONIZED = "merchant_recognized";
 	//Valor da chave - String
 	public static final String CARD_IN_POSSESSION = "card_in_possession";
+	//Valor da chave - String
+	public static final String STATUS = "status";
+	//Var de Erro - msg de erro ao bloquear o cartão
+	public static final String ERR_BLK = "Falha ao bloquear seu cartão";
+	//Var de Erro - msg de erro ao desbloquear o cartão
+	public static final String ERR_UNBLK = "Falha ao desbloquear seu cartão";
+	
+	//Var de BLK ok - msg de sucesso ao bloquear o cartão
+	public static final String OK_BLK = "Cartão bloqueado, recomendamos mantê-lo bloqueado.";
+	//Var de UNBLK ok - msg de sucesso ao desbloquear o cartão
+	public static final String OK_UNBLK = "Bloqueamos preventivamente o seu cartão.";
+	
+	//Var de Erro Geral - msg de erro genérica
+	public static final String ERR_GERAL = "Falha ao processar os dados";
 }

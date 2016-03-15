@@ -3,6 +3,7 @@ package br.com.guilhermes.exerciseNu;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,16 +11,46 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 public class ChargebackActivity extends Activity {
 
 	private JSONObject json;
+	private ImageView cadeado;
+	private TextView lblImg;
+	private Switch mrc;
+	private Switch cip;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chargeback);
+		
+		mrc = (Switch) findViewById(R.id.merchant_recognized);
+		mrc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {            
+                if (buttonView.isChecked()){
+                	mrc.setTextColor(getResources().getColor(R.color.green));
+                }else{
+                	mrc.setTextColor(getResources().getColor(R.color.black));
+                }
+            }
+		});
+		
+		cip = (Switch) findViewById(R.id.card_in_possession);
+		cip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {            
+                if (buttonView.isChecked()){
+                	cip.setTextColor(getResources().getColor(R.color.green));
+                }else{
+                	cip.setTextColor(getResources().getColor(R.color.black));
+                }
+            }
+		});
 		
 		try {
 			json = new JSONObject(getIntent().getStringExtra("conteudo"));
@@ -45,26 +76,27 @@ public class ChargebackActivity extends Activity {
 			
 			boolean joAutoBlock = json.getBoolean(StaticVars.AUTO_BLOCK);
 			JSONObject joBlkUblk = json.getJSONObject(StaticVars.LINKS);
-			JSONObject joUnBlk = joBlkUblk.getJSONObject(StaticVars.UNBLOCK_CARD);
-			JSONObject joBlk = joBlkUblk.getJSONObject(StaticVars.BLOCK_CARD);
-			JSONObject joCard = new JSONObject();
+			
 			String sAutoBlock = null;
+			JSONObject action;
+			cadeado = (ImageView) findViewById(R.id.img_cadeado);
+			lblImg = (TextView)findViewById(R.id.lbl_desc_img);
 			if(joAutoBlock)
 			{
-				joCard.put(StaticVars.ID, StaticVars.BLOCK_CARD);
-				joCard.put(StaticVars.RESPONSE, true);
+				JSONObject joBlk = joBlkUblk.getJSONObject(StaticVars.BLOCK_CARD);
 				//endereco block
-				sAutoBlock = new TratarPostRequests().doInBackground(joBlk.getString(StaticVars.HREF), joCard.toString());
+				sAutoBlock = new TratarPostRequests().execute(joBlk.getString(StaticVars.HREF), null).get();
+				action = new JSONObject(sAutoBlock);
+				BlockUnblockCard(action, StaticVars.BLOCK_CARD);
 			}
 			else
 			{
-				joCard.put(StaticVars.ID, StaticVars.UNBLOCK_CARD);
-				joCard.put(StaticVars.RESPONSE, true);
+				JSONObject joUnBlk = joBlkUblk.getJSONObject(StaticVars.UNBLOCK_CARD);
 				//endereco unblock
-				sAutoBlock = new TratarPostRequests().doInBackground(joUnBlk.getString(StaticVars.HREF), joCard.toString());
+				sAutoBlock = new TratarPostRequests().execute(joUnBlk.getString(StaticVars.HREF), null).get();
+				action = new JSONObject(sAutoBlock);
+				BlockUnblockCard(action, StaticVars.UNBLOCK_CARD);
 			}
-			TextView lblImg = (TextView)findViewById(R.id.lbl_desc_img);
-			lblImg.setText(sAutoBlock);
 			
 			JSONArray jsoA = json.getJSONArray(StaticVars.REASON_DETAILS);
 			JSONObject jso;
@@ -74,13 +106,11 @@ public class ChargebackActivity extends Activity {
 					
 					if(jso.get(StaticVars.ID).toString().equals(StaticVars.MERCHANT_RECONIZED))
 					{
-						Switch merchant = (Switch) findViewById(R.id.merchant_recognized);
-						merchant.setText(jso.getString(StaticVars.TITLE).toString());
+						mrc.setText(jso.getString(StaticVars.TITLE).toString());
 					}
 					else if(jso.get(StaticVars.ID).toString().equals(StaticVars.CARD_IN_POSSESSION))
 					{
-						Switch card = (Switch) findViewById(R.id.card_in_possession);
-						card.setText(jso.getString(StaticVars.TITLE).toString());
+						cip.setText(jso.getString(StaticVars.TITLE).toString());
 					}
 					
 				} catch (Exception e) {
@@ -90,6 +120,35 @@ public class ChargebackActivity extends Activity {
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}		
+	}
+	
+	/*
+	 * Método que configura a imagem e mensagem
+	 * sobre o status do cartão
+	 * */
+	private void BlockUnblockCard(JSONObject json, String action)
+	{
+		try {
+			if(json.getString(StaticVars.STATUS).toLowerCase().equals("ok"))
+			{
+				if(action.equals(StaticVars.BLOCK_CARD))
+				{
+					cadeado.setImageResource(R.drawable.charge_lock);
+					lblImg.setText(StaticVars.OK_BLK);
+				}else if(action.equals(StaticVars.UNBLOCK_CARD))
+				{
+					cadeado.setImageResource(R.drawable.charge_unlock);
+					lblImg.setText(StaticVars.OK_UNBLK);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+			lblImg.setText(StaticVars.ERR_GERAL);
+		}
 	}
 }

@@ -13,5 +13,7 @@
     <string name="str_estabelecimento">Estabelecimento</string>
     <string name="str_img">Cadeado</string>
     <string name="str_desc_img">Descrição</string>
+    <string name="tx_btn_contestar">Contestar</string>
+    <string name="tx_btn_cancelar">Cancelar</string>    
 
 </resources>

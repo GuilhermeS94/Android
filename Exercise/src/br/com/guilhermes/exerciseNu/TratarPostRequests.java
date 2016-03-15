@@ -20,6 +20,7 @@ public class TratarPostRequests extends AsyncTask<String, String, String>  {
 	protected String doInBackground(String... params) {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(params[0]);
+				
         HttpResponse response;
         String returnJson = "";
         try {
@@ -28,10 +29,7 @@ public class TratarPostRequests extends AsyncTask<String, String, String>  {
         	{
         		StringEntity se = new StringEntity(params[1]);
             	httpPost.setEntity(se);
-        	}        	
-        	
-        	httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
+        	}
         	
             response = httpclient.execute(httpPost);
             StatusLine statusLine = response.getStatusLine();

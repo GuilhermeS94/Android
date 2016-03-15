@@ -12,17 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:text="@string/str_chg_bk_titulo"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/black"
         android:typeface="sans" />
 
     <LinearLayout
-	    android:id="@+id/linear_cadeado"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"	    
-	    tools:context="br.com.guilhermes.exerciseNu.ChargebackActivity" >
+        android:id="@+id/linear_cadeado"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        tools:context="br.com.guilhermes.exerciseNu.ChargebackActivity" >
 
         <ImageView
             android:id="@+id/img_cadeado"
@@ -31,28 +33,64 @@
             android:layout_margin="5dp"
             android:contentDescription="@drawable/charge_unlock"
             android:src="@drawable/charge_unlock" />
-    
-    <TextView
-        android:id="@+id/lbl_desc_img"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="@string/str_desc_img"
-        android:textColor="@color/red"        
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-	</LinearLayout>
-    
+
+        <TextView
+            android:id="@+id/lbl_desc_img"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/str_desc_img"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/red" />
+    </LinearLayout>
+
     <Switch
         android:id="@+id/merchant_recognized"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/str_merchant" />
+        android:layout_marginBottom="10dp"
+        android:text="@string/str_merchant"
+        android:textOff="Não"
+        android:textOn="Sim" />
 
     <Switch
         android:id="@+id/card_in_possession"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/str_estabelecimento" />
+        android:layout_marginBottom="10dp"
+        android:text="@string/str_estabelecimento"
+        android:textOff="Não"
+        android:textOn="Sim" />
+
+    <EditText
+        android:id="@+id/comentario"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.54"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/linear_buttons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+	    <Button
+	        android:id="@+id/cancelar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/tx_btn_cancelar" />
+
+	    <Button
+	        android:id="@+id/contestar"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/tx_btn_contestar" />
+
+    </LinearLayout>
 
 </LinearLayout>
