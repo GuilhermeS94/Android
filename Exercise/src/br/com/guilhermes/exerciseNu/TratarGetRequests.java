@@ -11,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-public class TratarRequests extends AsyncTask<String, String, String> {
+public class TratarGetRequests extends AsyncTask<String, String, String> {
 	
 	@Override
     protected String doInBackground(String... uri){
@@ -22,7 +22,7 @@ public class TratarRequests extends AsyncTask<String, String, String> {
             response = httpclient.execute(new HttpGet(uri[0]));
             StatusLine statusLine = response.getStatusLine();
             if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-                returnJson = new TratarJson().ConverterInStreamParaJSON(response.getEntity().getContent());
+                returnJson = new Utils().ConverterInStreamParaJSON(response.getEntity().getContent());
             } else{
                 response.getEntity().getContent().close();
                 throw new IOException(statusLine.getReasonPhrase());

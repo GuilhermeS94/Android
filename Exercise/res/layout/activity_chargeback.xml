@@ -29,15 +29,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:contentDescription="@drawable/charge_lock"
-            android:src="@drawable/charge_lock" />
+            android:contentDescription="@drawable/charge_unlock"
+            android:src="@drawable/charge_unlock" />
     
     <TextView
         android:id="@+id/lbl_desc_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="@string/str_desc_img"        
+        android:text="@string/str_desc_img"
+        android:textColor="@color/red"        
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
 	</LinearLayout>

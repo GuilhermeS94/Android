@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -24,7 +23,7 @@ public class ChargebackActivity extends Activity {
 		
 		try {
 			json = new JSONObject(getIntent().getStringExtra("conteudo"));
-			Map<String, Object> saida = new HashMap();
+			Map<String, Object> saida = new HashMap<String,Object>();
 			Iterator<String> chaves = json.keys();
 		    while(chaves.hasNext()){
 		        String chave = chaves.next();
@@ -40,8 +39,33 @@ public class ChargebackActivity extends Activity {
 		            saida.put(chave, valor);
 		        }
 		    }
+		    
+		    TextView titulo = (TextView) findViewById(R.id.lbl_chg_bk_titulo);
+			titulo.setText(saida.get(StaticVars.TITLE).toString());
 			
 			boolean joAutoBlock = json.getBoolean(StaticVars.AUTO_BLOCK);
+			JSONObject joBlkUblk = json.getJSONObject(StaticVars.LINKS);
+			JSONObject joUnBlk = joBlkUblk.getJSONObject(StaticVars.UNBLOCK_CARD);
+			JSONObject joBlk = joBlkUblk.getJSONObject(StaticVars.BLOCK_CARD);
+			JSONObject joCard = new JSONObject();
+			String sAutoBlock = null;
+			if(joAutoBlock)
+			{
+				joCard.put(StaticVars.ID, StaticVars.BLOCK_CARD);
+				joCard.put(StaticVars.RESPONSE, true);
+				//endereco block
+				sAutoBlock = new TratarPostRequests().doInBackground(joBlk.getString(StaticVars.HREF), joCard.toString());
+			}
+			else
+			{
+				joCard.put(StaticVars.ID, StaticVars.UNBLOCK_CARD);
+				joCard.put(StaticVars.RESPONSE, true);
+				//endereco unblock
+				sAutoBlock = new TratarPostRequests().doInBackground(joUnBlk.getString(StaticVars.HREF), joCard.toString());
+			}
+			TextView lblImg = (TextView)findViewById(R.id.lbl_desc_img);
+			lblImg.setText(sAutoBlock);
+			
 			JSONArray jsoA = json.getJSONArray(StaticVars.REASON_DETAILS);
 			JSONObject jso;
 			for (int i=0; i < jsoA.length(); i++) {
@@ -63,11 +87,6 @@ public class ChargebackActivity extends Activity {
 					continue;
 				}
 			}
-			
-			TextView titulo = (TextView) findViewById(R.id.lbl_chg_bk_titulo);
-			titulo.setText(saida.get(StaticVars.TITLE).toString());
-			TextView lblImg = (TextView)findViewById(R.id.lbl_desc_img);			
-			//lblImg.setText();
 			
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -23,7 +23,7 @@ public class NoticeActivity extends Activity {
 		
 		//Solicitar o get
 		try {
-			String resp = new TratarRequests().execute(StaticVars.NOTICE).get();
+			String resp = new TratarGetRequests().execute(StaticVars.NOTICE).get();
 			json = new JSONObject(resp);
 	        
 			TextView nvTitulo = (TextView) findViewById(R.id.lbl_titulo);			
@@ -54,7 +54,7 @@ public class NoticeActivity extends Activity {
 				try {
 					JSONObject links = json.getJSONObject(StaticVars.LINKS);
 					JSONObject chgBack = links.getJSONObject(StaticVars.CHARGEBACK);
-					resp = new TratarRequests().execute(chgBack.get(StaticVars.HREF).toString()).get();
+					resp = new TratarGetRequests().execute(chgBack.get(StaticVars.HREF).toString()).get();
 					chargeBack.putExtra("conteudo", resp);
 	            	startActivity(chargeBack);
 	            	

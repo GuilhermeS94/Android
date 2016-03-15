@@ -8,10 +8,8 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class TratarJson {
+public class Utils {
+	
 	/*
 	 * Converte o Stream da Resposta(Get) em String
 	 * */
@@ -38,11 +36,4 @@ public class TratarJson {
         }
 	}
 	
-	/*
-	 * Converte um String em Objeto Json(JSONObject)
-	 * */
-	public JSONObject ConverterJsonParaJSONObject(String sJson) throws JSONException{		
-		JSONObject jsonOb = new JSONObject(sJson);		
-		return jsonOb;
-	}
 }
