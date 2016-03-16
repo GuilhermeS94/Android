@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
+    android:background="@color/background"
     tools:context="br.com.guilhermes.exerciseNu.ChargebackActivity" >
 
     <TextView
@@ -48,8 +49,8 @@
         android:id="@+id/merchant_recognized"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:text="@string/str_merchant"
+        android:layout_marginBottom="10dp"        
+        android:text="@string/str_estabelecimento"
         android:textOff="Não"
         android:textOn="Sim" />
 
@@ -58,14 +59,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/str_estabelecimento"
+        android:text="@string/str_cartao"
         android:textOff="Não"
         android:textOn="Sim" />
 
     <EditText
         android:id="@+id/comentario"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
         android:layout_weight="0.54"
         android:ems="10"
         android:inputType="textMultiLine" >
@@ -73,24 +74,37 @@
         <requestFocus />
     </EditText>
 
-    <LinearLayout
+    <GridLayout
         android:id="@+id/linear_buttons"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:rowCount="1"
+        android:columnCount="2"  >
         
 	    <Button
-	        android:id="@+id/cancelar"
+	        android:id="@+id/btn_cancelar"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/tx_btn_cancelar" />
-
+	        android:layout_column="0"
+	        android:layout_gravity="start"
+	        android:layout_row="0"
+	        android:background="@drawable/button_style_chgbk"
+	        android:text="@string/tx_btn_cancelar"
+	        android:textColor="@color/close_gray" />
+	    
 	    <Button
-	        android:id="@+id/contestar"
+	        android:id="@+id/btn_contestar"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/tx_btn_contestar" />
+	        android:layout_column="1"
+	        android:layout_gravity="end"
+	        android:layout_row="0"
+	        android:background="@drawable/button_style_chgbk"
+	        android:enabled="false"
+	        android:text="@string/tx_btn_contestar"
+	        android:textColor="@color/disabled_gray" />
 
-    </LinearLayout>
+    </GridLayout>
 
 </LinearLayout>

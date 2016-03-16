@@ -9,7 +9,7 @@
     <string name="tx_btn_fechar">Fechar</string>    
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="str_merchant">Cartão</string>
+    <string name="str_cartao">Cartão</string>
     <string name="str_estabelecimento">Estabelecimento</string>
     <string name="str_img">Cadeado</string>
     <string name="str_desc_img">Descrição</string>

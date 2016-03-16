@@ -24,7 +24,9 @@ public class StaticVars {
 	//Valor da chave - String
 	public static final String HREF = "href";
 	//Valor da chave - String
-	public static final String COMMENT_HINT = "comment_hint";
+	public static final String COMMENT_HINT = "comment_hint";	
+	//Valor da chave - String
+	public static final String COMMENT = "comment";
 	//Valor da chave - String
 	public static final String ID = "id";
 	//Valor da chave - String
