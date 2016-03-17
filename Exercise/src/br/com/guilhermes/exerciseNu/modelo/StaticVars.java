@@ -1,4 +1,4 @@
-package br.com.guilhermes.exerciseNu;
+package br.com.guilhermes.exerciseNu.modelo;
 
 public class StaticVars {
 	
@@ -52,11 +52,15 @@ public class StaticVars {
 	//Var de Erro - msg de erro ao desbloquear o cartão
 	public static final String ERR_UNBLK = "Falha ao desbloquear seu cartão";
 	
-	//Var de BLK ok - msg de sucesso ao bloquear o cartão
-	public static final String OK_BLK = "Cartão bloqueado, recomendamos mantê-lo bloqueado.";
-	//Var de UNBLK ok - msg de sucesso ao desbloquear o cartão
-	public static final String OK_UNBLK = "Bloqueamos preventivamente o seu cartão.";
+	//Var de UNBLK ok - msg de sucesso ao bloquear o cartão
+	public static final String OK_UNBLK = "Cartão desbloqueado, recomendamos mantê-lo bloqueado.";
+	//Var de BLK ok - msg de sucesso ao desbloquear o cartão
+	public static final String OK_BLK = "Bloqueamos preventivamente o seu cartão.";
 	
 	//Var de Erro Geral - msg de erro genérica
 	public static final String ERR_GERAL = "Falha ao processar os dados";
+	
+	//Contestação OK
+	public static final String OK_CONTESTACAO = "Contestação de compra recebida";
+	public static final String MSG_CONTESTACAO = "Fique de olho no seu email! Nos próximos 3 dias você deverá receber um primeiro retorno sobre sua contestação.";
 }

@@ -1,8 +1,5 @@
 package br.com.guilhermes.exerciseNu;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
@@ -10,6 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -21,23 +22,39 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import br.com.guilhermes.exerciseNu.modelo.StaticVars;
+import br.com.guilhermes.exerciseNu.requests.TratarPostRequests;
 
 public class ChargebackActivity extends Activity {
 
+	//Titulo
 	private TextView titulo;
+	//resposta do post Notice - JSON principal
 	private JSONObject json;
+	//Imagem/Icone do cadeado
 	private ImageView cadeado;
+	//Label que acompanha Imagem
 	private TextView lblImg;
+	//Interruptores do Merchant e Cartao
 	private Switch mrc;
 	private Switch cip;
+	//Justificativa do usuario
 	private EditText comentario;
+	
+	//botoes Cancelar e Contestar
 	private Button btnCancelar;
 	private Button btnContestar;
+	
+	//Tratamento de "Session"
+	private SharedPreferences session;
+	private Editor editor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chargeback);		
+		session = getApplicationContext().getSharedPreferences("Sessions", 0);
+		editor = session.edit();
 		
 		titulo = (TextView) findViewById(R.id.lbl_chg_bk_titulo);
 		cadeado = (ImageView) findViewById(R.id.img_cadeado);
@@ -50,69 +67,58 @@ public class ChargebackActivity extends Activity {
 
 		try {
 			json = new JSONObject(getIntent().getStringExtra("conteudo"));
-			Map<String, Object> saida = new HashMap<String,Object>();
-			Iterator<String> chaves = json.keys();
-		    while(chaves.hasNext()){
-		        String chave = chaves.next();
-		        String valor = null;
-		        try{
-		             JSONObject jso = json.getJSONObject(chave);
-		             saida.put(chave, jso);
-		        }catch(Exception e){
-		            valor = json.getString(chave);
-		        }
-
-		        if(valor != null){
-		            saida.put(chave, valor);
-		        }
-		    }		    
 		    
-			titulo.setText(saida.get(StaticVars.TITLE).toString());			
-			JSONObject joBlkUblk = json.getJSONObject(StaticVars.LINKS);			
-			String sAutoBlock = null;
+		    titulo.setText(json.get(StaticVars.TITLE).toString());
 			
+			//salvar na session este Json, contem o link(self) para post final
+			editor.putString("JSON", json.getJSONObject(StaticVars.LINKS).getJSONObject(StaticVars.SELF).toString());
+			editor.commit();
+			
+			String sAutoBlock = null;			
 			if(json.getBoolean(StaticVars.AUTO_BLOCK))
 			{
-				JSONObject joBlk = joBlkUblk.getJSONObject(StaticVars.BLOCK_CARD);
 				//endereco block
-				sAutoBlock = new TratarPostRequests().execute(joBlk.getString(StaticVars.HREF), null).get();				
+				sAutoBlock = new TratarPostRequests()
+						.execute(
+								json.getJSONObject(StaticVars.LINKS)
+								.getJSONObject(StaticVars.BLOCK_CARD)
+								.getString(StaticVars.HREF),
+								null)
+						.get();
 				BlockUnblockCard(new JSONObject(sAutoBlock), StaticVars.BLOCK_CARD);
 			}
 			else
 			{
-				JSONObject joUnBlk = joBlkUblk.getJSONObject(StaticVars.UNBLOCK_CARD);
 				//endereco unblock
-				sAutoBlock = new TratarPostRequests().execute(joUnBlk.getString(StaticVars.HREF), null).get();				
+				sAutoBlock = new TratarPostRequests()
+						.execute(
+								json.getJSONObject(StaticVars.LINKS)
+								.getJSONObject(StaticVars.UNBLOCK_CARD)
+								.getString(StaticVars.HREF),
+								null)
+						.get();				
 				BlockUnblockCard(new JSONObject(sAutoBlock), StaticVars.UNBLOCK_CARD);
 			}
 			
 			JSONArray jsoA = json.getJSONArray(StaticVars.REASON_DETAILS);
-			JSONObject jso;
-			for (int i=0; i < jsoA.length(); i++) {
-				try {
-					jso = (JSONObject)jsoA.get(i);
-					
-					if(jso.get(StaticVars.ID).toString().equals(StaticVars.MERCHANT_RECONIZED))
-					{
-						mrc.setText(jso.getString(StaticVars.TITLE).toString());
-					}
-					else if(jso.get(StaticVars.ID).toString().equals(StaticVars.CARD_IN_POSSESSION))
-					{
-						cip.setText(jso.getString(StaticVars.TITLE).toString());
-					}
-					
-				} catch (Exception e) {
-					continue;
-				}
-			}
+			
+			mrc.setText(jsoA.getJSONObject(0).getString(StaticVars.TITLE).toString());			
+			cip.setText(jsoA.getJSONObject(1).getString(StaticVars.TITLE).toString());
+			
 			comentario.setHint(Html.fromHtml(json.getString(StaticVars.COMMENT_HINT)));
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
+			lblImg.setText(StaticVars.ERR_GERAL);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			lblImg.setText(StaticVars.ERR_GERAL);
 		} catch (ExecutionException e) {
 			e.printStackTrace();
+			lblImg.setText(StaticVars.ERR_GERAL);
+		}catch (Exception e){
+			e.printStackTrace();
+			lblImg.setText(StaticVars.ERR_GERAL);
 		}
 		
 		comentario.addTextChangedListener(new TextWatcher() {          
@@ -149,8 +155,9 @@ public class ChargebackActivity extends Activity {
             public void onClick(View v) {
             	
             	String resp = null;
+            	
 				try {
-					JSONObject response = new JSONObject();
+					JSONObject response = new JSONObject();					
 					JSONArray jsArray = new JSONArray();
 					jsArray.put(
 							new JSONObject()
@@ -166,14 +173,48 @@ public class ChargebackActivity extends Activity {
 					response.put(StaticVars.COMMENT, comentario.getText().toString().trim());
 					response.put(StaticVars.REASON_DETAILS, jsArray.toString());
 					
-					resp = new TratarPostRequests().execute(json.getString(StaticVars.SELF), response.toString()).get();					
+					JSONObject post = new JSONObject(session.getString("JSON", null));
+					
+					resp = new TratarPostRequests().execute(post.getString(StaticVars.HREF), response.toString()).get();					
 	            	
+					JSONObject rsp = new JSONObject(resp);
+					if(rsp.getString(StaticVars.STATUS).toLowerCase().equals("ok"))
+					{
+						AlertDialog.Builder alert = new AlertDialog.Builder(ChargebackActivity.this);
+						alert.setTitle(StaticVars.OK_CONTESTACAO);
+						alert.setMessage(StaticVars.MSG_CONTESTACAO);
+						alert.setPositiveButton("Fechar",
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog,
+														int whichButton) {
+													//encerrar aplicação						                                
+													finish();
+													System.exit(0);
+													
+													}
+												}
+											);
+						alert.show();
+					}
+					else
+					{
+						throw new Exception("Não foi possível fazer sua contestação.");
+					}
+					
+					editor.clear();
+					editor.commit();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+					lblImg.setText(StaticVars.ERR_GERAL);
 				} catch (ExecutionException e) {
 					e.printStackTrace();
+					lblImg.setText(StaticVars.ERR_GERAL);
 				} catch (JSONException e) {
 					e.printStackTrace();
+					lblImg.setText(StaticVars.ERR_GERAL);
+				} catch (Exception e) {
+					e.printStackTrace();
+					lblImg.setText(StaticVars.ERR_GERAL);
 				}                
             }
         });
@@ -206,10 +247,10 @@ public class ChargebackActivity extends Activity {
 	 * Método que configura a imagem e mensagem
 	 * sobre o status do cartão
 	 * */
-	private void BlockUnblockCard(JSONObject json, String action)
+	private void BlockUnblockCard(JSONObject jo, String action)
 	{
 		try {
-			if(json.getString(StaticVars.STATUS).toLowerCase().equals("ok"))
+			if(jo.getString(StaticVars.STATUS).toLowerCase().equals("ok"))
 			{
 				if(action.equals(StaticVars.BLOCK_CARD))
 				{

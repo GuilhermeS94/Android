@@ -1,4 +1,4 @@
-package br.com.guilhermes.exerciseNu;
+package br.com.guilhermes.exerciseNu.modelo;
 
 import java.io.BufferedReader;
 import java.io.IOException;

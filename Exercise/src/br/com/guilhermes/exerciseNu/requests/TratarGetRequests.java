@@ -1,4 +1,4 @@
-package br.com.guilhermes.exerciseNu;
+package br.com.guilhermes.exerciseNu.requests;
 
 import java.io.IOException;
 import org.apache.http.HttpResponse;
@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
+import br.com.guilhermes.exerciseNu.modelo.Utils;
 
 public class TratarGetRequests extends AsyncTask<String, String, String> {
 	
